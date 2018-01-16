@@ -10,8 +10,11 @@ public class Item {
 
     /**
      * Конструктор без параметров.
+     *
+     * @param name
+     * @param first_desc
      */
-    public Item() {
+    public Item(String name, String first_desc) {
     }
 
     /**

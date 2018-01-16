@@ -106,10 +106,27 @@ public class Tracker {
     public void delete(Item item) {
         Item[] itemsNew = new Item[items.length];
         int index = item.getIndex();
-        System.arraycopy(items, 0, itemsNew, 0, index - 1);
-        System.arraycopy(items, index, itemsNew, index - 1, items.length - index);
+        // удаление с начала массива
+        if (index == 0) {
+            System.arraycopy(items, 1, itemsNew, 0, items.length - 1);
+        }
+        // удаление с середины массива
+        else if (index > 0 && index < items.length) {
+            System.arraycopy(items, 0, itemsNew, 0, index);
+            System.arraycopy(items, index + 1, itemsNew, index, items.length - index - 1);
+        }
+        // удаление с конца массива
+        else if (index == items.length) {
+            System.arraycopy(items, 0, itemsNew, 0, index);
+        }
+
         items = itemsNew;
         this.position--;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] instanceof Item) {
+                items[i].setIndex(i);
+            }
+        }
     }
 
     /**
@@ -117,13 +134,22 @@ public class Tracker {
      * Для этого находим ячейку в массиве по id (с помощью метода getId).
      * Принимаем на вход один параметр Item, а не список полей.
      *
-     * @param item - заявка.
+     * @param itemOld - старая заявка.
+     * @param itemNew - новая заявка.
      */
-    public void update(Item item) {
+/*    public void update(Item item) {
         String updId = item.getId();
         Item updItem = this.findById(updId);
         updItem.setId(item.getId());
         this.items[updItem.getIndex()] = item;
         this.items[updItem.getIndex()].setId(updId);
+    }*/
+    public void update(Item itemOld, Item itemNew) {
+        // находим id у старой заявки
+        String updId = itemOld.getId();
+        // меняем старую заявку на новую
+        this.items[itemOld.getIndex()] = itemNew;
+        // апдейтим id у новой заявки на старый
+        this.items[itemOld.getIndex()].setId(updId);
     }
 }
