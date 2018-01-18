@@ -29,8 +29,8 @@ public class TrackerTest {
         tracker.add(item4);
         tracker.add(item5);
         // Проверка конца массива (вручную устанавливаем индекс)
-        tracker.items[99] = item100;
-        tracker.items[99].setIndex(99);
+//        tracker.items[99] = item100;
+//        tracker.items[99].setIndex(99);
         tracker.delete(tracker.items[3]);
 
         Item[] itemsTest = new Item[tracker.items.length];
@@ -38,7 +38,7 @@ public class TrackerTest {
         itemsTest[1] = item2;
         itemsTest[2] = item4;
         itemsTest[3] = item5;
-        itemsTest[98] = item100;
+        //itemsTest[98] = item100;
 
         assertThat(tracker.items, is(itemsTest));
     }
