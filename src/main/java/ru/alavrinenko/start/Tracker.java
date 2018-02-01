@@ -104,23 +104,19 @@ public class Tracker {
      * @param item - заявка.
      */
     public void delete(Item item) {
-        Item[] itemsNew = new Item[items.length];
-        int index = item.getIndex();
-        // удаление с начала массива
-        if (index == 0) {
-            System.arraycopy(items, 1, itemsNew, 0, items.length - 1);
+        String wantedId = item.getId();
+        int wantedIndex = 0;
+        for (int index = 0; index < this.position; index++) {
+            if (this.items[index].getId().equals(wantedId)) {
+                wantedIndex = index;
+                break;
+            }
         }
-        // удаление с середины массива
-        else if (index > 0 && index < items.length) {
-            System.arraycopy(items, 0, itemsNew, 0, index);
-            System.arraycopy(items, index + 1, itemsNew, index, items.length - index - 1);
+        if (wantedIndex + 1 < items.length) {
+            System.arraycopy(items, wantedIndex + 1, items, wantedIndex, position - wantedIndex);
+        } else {
+            items[wantedIndex] = null;
         }
-        // удаление с конца массива
-        else if (index == items.length) {
-            System.arraycopy(items, 0, itemsNew, 0, index);
-        }
-
-        items = itemsNew;
         this.position--;
         for (int i = 0; i < items.length; i++) {
             if (items[i] instanceof Item) {

@@ -37,11 +37,9 @@ public class StartUI {
      * Выводим на экран меню доступных действий.
      */
     private void printMenu() {
-        Formatter sb = new Formatter();
-        sb.format("0. %s %n1. %s %n2. %s %n3. %s %n4. %s %n5. %s %n6. %s %n",
-                "Add new Item", "Show all items", "Edit item", "Delete item",
-                "Find item by Id", "Find items by name", "Exit Program");
-        System.out.println(sb);
+        String menu = String.format("%s %n%s %n%s %n%s %n%s %n%s %n%s", "0. Add new Item", "1. Show all items",
+                "2. Edit item", "3. Delete item", "4. Find item by Id", "5. Find items by name", "6. Exit Program");
+        System.out.println(menu);
     }
 
 
@@ -123,8 +121,7 @@ public class StartUI {
     private void delTask(Tracker tracker, String id) {
         Item item = tracker.findById(id);
         tracker.delete(item);
-        Formatter strFormat = new Formatter();
-        strFormat.format("Заявка с ID: %s удалена!", item.getId());
+        String strFormat = String.format("Заявка с ID: %s удалена!", item.getId());
         System.out.println(strFormat);
     }
 
@@ -136,8 +133,8 @@ public class StartUI {
      */
     private void idFind(Tracker tracker, String id) {
         Item item = tracker.findById(id);
-        Formatter strFormat = new Formatter();
-        strFormat.format("Найдена заявка с ID: %s с названием %s с дескриптором %s%n", item.getId(), item.name, item.description);
+        String strFormat = String.format("Найдена заявка с ID: %s с названием %s с дескриптором %s%n",
+                item.getId(), item.name, item.description);
         System.out.println(strFormat);
     }
 
@@ -150,8 +147,7 @@ public class StartUI {
     private void nameFind(Tracker tracker, String key) {
         Item[] items = tracker.findByName(key);
         for (Item item : items) {
-            Formatter strFormat = new Formatter();
-            strFormat.format("Найдена заявка с ID: %s с названием %s с дескриптором %s%n", item.getId(), item.name, item.description);
+            String strFormat = String.format("Найдена заявка с ID: %s с названием %s с дескриптором %s%n", item.getId(), item.name, item.description);
             System.out.println(strFormat);
         }
     }
@@ -176,8 +172,7 @@ public class StartUI {
                 input.ask("Enter task description: "),
                 System.currentTimeMillis());
         tracker.add(item);
-        Formatter strFormat = new Formatter();
-        strFormat.format("Новая заявка: %s создана%n", tracker.items[item.getIndex()].name);
+        String strFormat = String.format("Новая заявка: %s создана%n", tracker.items[item.getIndex()].name);
         System.out.println(strFormat);
     }
 
@@ -189,8 +184,8 @@ public class StartUI {
     private void showAll(Tracker tracker) {
         Item[] items = tracker.getAll();
         for (Item item : items) {
-            Formatter strFormat = new Formatter();
-            strFormat.format("Заявка с ID: %s с названием %s с дескриптором %s%n", item.getId(), item.name, item.description);
+            String strFormat = String.format("Заявка с ID: %s с названием %s с дескриптором %s",
+                    item.getId(), item.name, item.description);
             System.out.println(strFormat);
         }
         System.out.println();
@@ -201,13 +196,10 @@ public class StartUI {
         Input input = new ConsoleInput();
         StartUI sui = new StartUI(input);
         Tracker tracker = new Tracker();
-//        Formatter strFormat = new Formatter();
 
         sui.selectPosition();
-//        sui.init();
+
         while (sui.getPos() >= 0 && sui.getPos() < 6) {
-/*            strFormat.format("Выбранная позиция: %s", sui.getPos());
-            System.out.println(strFormat);*/
             System.out.println(new StringBuilder().append("Выбранная позиция: ").append(sui.getPos()).toString());
             sui.actionMenu(tracker, sui.getPos());
             sui.selectPosition();
