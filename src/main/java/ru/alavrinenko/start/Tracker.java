@@ -133,13 +133,7 @@ public class Tracker {
      * @param itemOld - старая заявка.
      * @param itemNew - новая заявка.
      */
-/*    public void update(Item item) {
-        String updId = item.getId();
-        Item updItem = this.findById(updId);
-        updItem.setId(item.getId());
-        this.items[updItem.getIndex()] = item;
-        this.items[updItem.getIndex()].setId(updId);
-    }*/
+
     public void update(Item itemOld, Item itemNew) {
         // находим id у старой заявки
         String updId = itemOld.getId();

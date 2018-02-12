@@ -10,6 +10,12 @@ public class Item {
 
     /**
      * Конструктор без параметров.
+     */
+    public Item() {
+    }
+
+    /**
+     * Конструктор с двумя параметрами.
      *
      * @param name
      * @param first_desc
@@ -18,7 +24,7 @@ public class Item {
     }
 
     /**
-     * Конструктор с параметрами.
+     * Конструктор с тремя параметрами.
      *
      * @param name        - имя.
      * @param description - описание.

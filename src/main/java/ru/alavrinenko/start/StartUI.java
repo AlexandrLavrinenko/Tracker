@@ -2,8 +2,6 @@ package ru.alavrinenko.start;
 
 import ru.alavrinenko.models.*;
 
-import java.util.Formatter;
-
 public class StartUI {
     private Input input;
     private static final int ADDNEW = 0;
@@ -14,23 +12,16 @@ public class StartUI {
     private static final int NAMEFIND = 5;
     private static final int EXIT = 6;
     private int pos;
+    private Tracker tracker;
 
     /**
      * Инициализация параметров с помощью конструктора.
      *
      * @param input тип ввода (коноль или тест).
      */
-    public StartUI(Input input) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
-    }
-
-    public void init() {
-        String name = input.ask("Please, enter the task's name: ");
-        Tracker tracker = new Tracker();
-        tracker.add(new Item(name, "first desc", System.currentTimeMillis()));
-        for (Item item : tracker.getAll()) {
-            System.out.println(item.getName());
-        }
+        this.tracker = tracker;
     }
 
     /**
@@ -46,9 +37,9 @@ public class StartUI {
     /**
      * Вывод вопроса о выборе номера действия на экран.
      *
-     * @return номер позиции для действия.
+     * Определяет номер позиции для действия.
      */
-    public void selectPosition() {
+    private void selectPosition() {
         this.printMenu();
         String resultStr = input.ask("Select: ");
         if (resultStr.isEmpty()) {
@@ -64,8 +55,8 @@ public class StartUI {
      * @param tracker  трекер.
      * @param position выбранный пользователем номер позиции в меню.
      */
-    public void actionMenu(Tracker tracker, int position) {
-        Item item = new Item("task1", "description1", System.currentTimeMillis());
+    private void actionMenu(Tracker tracker, int position) {
+        //Item item = new Item("task1", "description1", System.currentTimeMillis());
         switch (position) {
             case ADDNEW:
                 this.addNewTask(tracker, input);
@@ -106,8 +97,7 @@ public class StartUI {
     private void updTask(Tracker tracker, String id, Item itemNew) {
         Item item = tracker.findById(id);
         tracker.update(item, itemNew);
-        Formatter strFormat = new Formatter();
-        strFormat.format("Заявка с ID: %s обновлена!%nНовые параметры заявки: ", item.getId());
+        String strFormat = String.format("Заявка с ID: %s обновлена!%nНовые параметры заявки: ", item.getId());
         System.out.println(strFormat);
         this.idFind(tracker, id);
     }
@@ -157,7 +147,7 @@ public class StartUI {
      *
      * @return номер позиции.
      */
-    public int getPos() {
+    private int getPos() {
         return pos;
     }
 
@@ -192,20 +182,23 @@ public class StartUI {
     }
 
 
-    public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        StartUI sui = new StartUI(input);
-        Tracker tracker = new Tracker();
+    public void init() {
+//        Input input = new ConsoleInput();
+//        StartUI sui = new StartUI(input, new Tracker());
+        this.selectPosition();
 
-        sui.selectPosition();
-
-        while (sui.getPos() >= 0 && sui.getPos() < 6) {
-            System.out.println(new StringBuilder().append("Выбранная позиция: ").append(sui.getPos()).toString());
-            sui.actionMenu(tracker, sui.getPos());
-            sui.selectPosition();
+        while (this.getPos() >= 0 && this.getPos() < 6) {
+            System.out.println(new StringBuilder().append("Выбранная позиция: ").append(this.getPos()).toString());
+            this.actionMenu(this.tracker, this.getPos());
+            this.selectPosition();
         }
-        System.out.println(new StringBuilder().append("Выбранная позиция: ").append(sui.getPos()).toString());
+        System.out.println(new StringBuilder().append("Выбранная позиция: ").append(this.getPos()).toString());
         System.out.println("Exit...");
         input.scannerClose();
+    }
+
+    public static void main(String[] args) {
+        Input input = new ConsoleInput();
+        new StartUI(input, new Tracker()).init();
     }
 }

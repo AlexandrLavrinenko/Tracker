@@ -1,18 +1,31 @@
 package ru.alavrinenko.start;
-// класс из видео - доп.реализации не было
+
 /**
  * Класс для тестирования без участия консоли.
  */
 public class StubInput implements Input{
-    private String[] answers;
-    private int position = 0;
+    /**
+     * Это поле содержит последовательность ответов пользователя.
+     * Например. пользователь  хочет выбрать добавление новой заявки ему нужно ввести:
+     * 0 - выбор пункта меня "добавить новую заявку".
+     * name - имя заявки
+     * desc - описание заявки
+     * 6 - выйти из трекера.
+     */
+    private final String[] answers;
+
+    /**
+     * Поле считает количество вызовов метода ask.
+     * При каждом вызове надо передвинуть указатель на новое число.
+     */
+    private int position;
 
     /**
      * Переопрелеляем конструктор.
      *
      * @param answers - строковый массив ответов.
      */
-    public StubInput(String[] answers) {
+    public StubInput(final String[] answers) {
         this.answers = answers;
     }
 
