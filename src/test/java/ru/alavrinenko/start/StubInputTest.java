@@ -6,6 +6,11 @@ import ru.alavrinenko.models.Item;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
+/**
+ * @author Lavrinenko Aleksandr (alexandr.lavrinenko@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ */
 public class StubInputTest {
     // создаём Tracker
     Tracker tracker = new Tracker();
